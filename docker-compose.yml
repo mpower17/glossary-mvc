@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  java-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: glossary-web
+    links:
+      - mongo-db
+  mongo-db:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: springmvc
+    ports:
+      - "27017:27017"
+    container_name: glossary-db
+    volumes:
+      - ./db/:/data/db

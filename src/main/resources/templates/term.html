@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="default">
+    <head>
+        <title>Term List</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="row">
+            <div class="col-xs-8 col-md-8">
+                <h3>
+                    <a href="/create" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span>Term
+                    </a>
+                </h3>
+                <h2>Term List</h2>
+                <div class="table-responsive">
+                    <table class="table" id="term-table">
+                        <thead>
+                            <tr>
+                                <th>Term Name</th>
+                                <th>Term Desc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="term : ${term}">
+                                <td><a th:text="${term.termName}" th:href="@{'/show/' + ${term.id}}"></a></td>
+                                <td th:text="${term.termDesc}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
