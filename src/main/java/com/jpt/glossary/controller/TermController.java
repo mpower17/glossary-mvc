@@ -42,30 +42,32 @@ public class TermController {
 
     @RequestMapping("/show/{id}")
     public String show(@PathVariable String id, Model model) {
-        model.addAttribute("term", termRepository.findById(id).get());
+        termRepository.findById(id).ifPresent(t -> model.addAttribute("term", t));
         return "show";
     }
 
     @RequestMapping("/delete")
     public String delete(@RequestParam String id) {
         Optional<Term> term = termRepository.findById(id);
-        termRepository.delete(term.get());
+        term.ifPresent(termRepository::delete);
 
         return "redirect:/term";
     }
-    
+
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable String id, Model model) {
-        model.addAttribute("term", termRepository.findById(id).get());
+        termRepository.findById(id).ifPresent(t -> model.addAttribute("term", t));
         return "edit";
     }
-    
+
     @RequestMapping("/update")
     public String update(@RequestParam String id, @RequestParam String termName, @RequestParam String termDesc) {
         Optional<Term> term = termRepository.findById(id);
-        term.get().setTermName(termName);
-        term.get().setTermDesc(termDesc);
-        termRepository.save(term.get());
+        term.ifPresent(t -> {
+            t.setTermName(termName);
+            t.setTermDesc(termDesc);
+            termRepository.save(t);
+        });
 
         return "redirect:/show/" + term.get().getId();
     }
