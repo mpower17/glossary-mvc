@@ -69,6 +69,6 @@ public class TermController {
             termRepository.save(t);
         });
 
-        return "redirect:/show/" + term.get().getId();
+        return term.map(value -> "redirect:/show/" + value.getId()).orElse("show");
     }
 }
